@@ -129,20 +129,5 @@ int main( int argc, char *argv[] )
   writer->SetInput(caster->GetOutput());
   writer->Update();
 
-  using DifferenceFilterType = itk::SubtractImageFilter< FixedImageType, FixedImageType, FixedImageType >;
-  DifferenceFilterType::Pointer difference = DifferenceFilterType::New();
-  difference->SetInput1(fixedImageReader->GetOutput());
-  difference->SetInput2(resampler->GetOutput());
-
-  using RescalerType = itk::RescaleIntensityImageFilter<FixedImageType, OutputImageType>;
-  RescalerType::Pointer intensityRescaler = RescalerType::New();
-  intensityRescaler->SetInput(difference->GetOutput());
-  intensityRescaler->SetOutputMinimum(0);
-  intensityRescaler->SetOutputMaximum(255);
-  resampler->SetDefaultPixelValue(1);
-
-  WriterType::Pointer writer2 = WriterType::New();
-  writer2->SetInput(intensityRescaler->GetOutput());
-
   return 0;
 }
