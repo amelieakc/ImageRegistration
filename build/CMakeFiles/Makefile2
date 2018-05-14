@@ -45,19 +45,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/local/Cellar/cmake/3.11.1/bin/cmake
+CMAKE_COMMAND = /Applications/CMake.app/Contents/bin/cmake
 
 # The command to remove a file.
-RM = /usr/local/Cellar/cmake/3.11.1/bin/cmake -E remove -f
+RM = /Applications/CMake.app/Contents/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/robertgriesmeyer/ImageRegistration
+CMAKE_SOURCE_DIR = /Users/amelie/Documents/CSC621/ImageRegistration
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/robertgriesmeyer/ImageRegistration/build
+CMAKE_BINARY_DIR = /Users/amelie/Documents/CSC621/ImageRegistration/build
 
 #=============================================================================
 # Target rules for target CMakeFiles/ImageRegistrationMethod.dir
@@ -66,7 +66,7 @@ CMAKE_BINARY_DIR = /Users/robertgriesmeyer/ImageRegistration/build
 CMakeFiles/ImageRegistrationMethod.dir/all:
 	$(MAKE) -f CMakeFiles/ImageRegistrationMethod.dir/build.make CMakeFiles/ImageRegistrationMethod.dir/depend
 	$(MAKE) -f CMakeFiles/ImageRegistrationMethod.dir/build.make CMakeFiles/ImageRegistrationMethod.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/robertgriesmeyer/ImageRegistration/build/CMakeFiles --progress-num=1,2 "Built target ImageRegistrationMethod"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/amelie/Documents/CSC621/ImageRegistration/build/CMakeFiles --progress-num=1,2 "Built target ImageRegistrationMethod"
 .PHONY : CMakeFiles/ImageRegistrationMethod.dir/all
 
 # Include target in all.
@@ -76,9 +76,9 @@ all: CMakeFiles/ImageRegistrationMethod.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/ImageRegistrationMethod.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/robertgriesmeyer/ImageRegistration/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/amelie/Documents/CSC621/ImageRegistration/build/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/ImageRegistrationMethod.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/robertgriesmeyer/ImageRegistration/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/amelie/Documents/CSC621/ImageRegistration/build/CMakeFiles 0
 .PHONY : CMakeFiles/ImageRegistrationMethod.dir/rule
 
 # Convenience name for target.

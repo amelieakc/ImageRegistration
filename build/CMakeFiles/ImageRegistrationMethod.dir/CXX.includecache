@@ -6,27 +6,27 @@
 
 #IncludeRegexTransform: 
 
-/Users/robertgriesmeyer/ImageRegistration/ImageRegistrationMethod.cxx
+/Users/amelie/Documents/CSC621/ImageRegistration/ImageRegistrationMethod.cxx
 itkImageRegistrationMethodv4.h
-/Users/robertgriesmeyer/ImageRegistration/itkImageRegistrationMethodv4.h
+/Users/amelie/Documents/CSC621/ImageRegistration/itkImageRegistrationMethodv4.h
 itkTranslationTransform.h
-/Users/robertgriesmeyer/ImageRegistration/itkTranslationTransform.h
+/Users/amelie/Documents/CSC621/ImageRegistration/itkTranslationTransform.h
 itkMeanSquaresImageToImageMetricv4.h
-/Users/robertgriesmeyer/ImageRegistration/itkMeanSquaresImageToImageMetricv4.h
+/Users/amelie/Documents/CSC621/ImageRegistration/itkMeanSquaresImageToImageMetricv4.h
 itkRegularStepGradientDescentOptimizerv4.h
-/Users/robertgriesmeyer/ImageRegistration/itkRegularStepGradientDescentOptimizerv4.h
+/Users/amelie/Documents/CSC621/ImageRegistration/itkRegularStepGradientDescentOptimizerv4.h
 itkImageFileReader.h
-/Users/robertgriesmeyer/ImageRegistration/itkImageFileReader.h
+/Users/amelie/Documents/CSC621/ImageRegistration/itkImageFileReader.h
 itkImageFileWriter.h
-/Users/robertgriesmeyer/ImageRegistration/itkImageFileWriter.h
+/Users/amelie/Documents/CSC621/ImageRegistration/itkImageFileWriter.h
 itkResampleImageFilter.h
-/Users/robertgriesmeyer/ImageRegistration/itkResampleImageFilter.h
+/Users/amelie/Documents/CSC621/ImageRegistration/itkResampleImageFilter.h
 itkCastImageFilter.h
-/Users/robertgriesmeyer/ImageRegistration/itkCastImageFilter.h
+/Users/amelie/Documents/CSC621/ImageRegistration/itkCastImageFilter.h
 itkRescaleIntensityImageFilter.h
-/Users/robertgriesmeyer/ImageRegistration/itkRescaleIntensityImageFilter.h
+/Users/amelie/Documents/CSC621/ImageRegistration/itkRescaleIntensityImageFilter.h
 itkSubtractImageFilter.h
-/Users/robertgriesmeyer/ImageRegistration/itkSubtractImageFilter.h
+/Users/amelie/Documents/CSC621/ImageRegistration/itkSubtractImageFilter.h
 
 /usr/local/include/ITK-4.13/ITKCommonExport.h
 

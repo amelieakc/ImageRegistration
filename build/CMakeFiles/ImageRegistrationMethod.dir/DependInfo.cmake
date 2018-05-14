@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/robertgriesmeyer/ImageRegistration/ImageRegistrationMethod.cxx" "/Users/robertgriesmeyer/ImageRegistration/build/CMakeFiles/ImageRegistrationMethod.dir/ImageRegistrationMethod.cxx.o"
+  "/Users/amelie/Documents/CSC621/ImageRegistration/ImageRegistrationMethod.cxx" "/Users/amelie/Documents/CSC621/ImageRegistration/build/CMakeFiles/ImageRegistrationMethod.dir/ImageRegistrationMethod.cxx.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

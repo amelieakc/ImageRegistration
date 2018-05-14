@@ -241,19 +241,5 @@ int main( int argc, char *argv[] )
   WriterType::Pointer writer2 = WriterType::New();
   writer2->SetInput( intensityRescaler->GetOutput() );
 
-  if( argc > 4 )
-    {
-    writer2->SetFileName( argv[4] );
-    writer2->Update();
-    }
-
-  resampler->SetTransform( identityTransform );
-
-  if( argc > 5 )
-    {
-    writer2->SetFileName( argv[5] );
-    writer2->Update();
-    }
-
   return EXIT_SUCCESS;
 }

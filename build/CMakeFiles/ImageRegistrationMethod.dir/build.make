@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/local/Cellar/cmake/3.11.1/bin/cmake
+CMAKE_COMMAND = /Applications/CMake.app/Contents/bin/cmake
 
 # The command to remove a file.
-RM = /usr/local/Cellar/cmake/3.11.1/bin/cmake -E remove -f
+RM = /Applications/CMake.app/Contents/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/robertgriesmeyer/ImageRegistration
+CMAKE_SOURCE_DIR = /Users/amelie/Documents/CSC621/ImageRegistration
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/robertgriesmeyer/ImageRegistration/build
+CMAKE_BINARY_DIR = /Users/amelie/Documents/CSC621/ImageRegistration/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/ImageRegistrationMethod.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/ImageRegistrationMethod.dir/flags.make
 
 CMakeFiles/ImageRegistrationMethod.dir/ImageRegistrationMethod.cxx.o: CMakeFiles/ImageRegistrationMethod.dir/flags.make
 CMakeFiles/ImageRegistrationMethod.dir/ImageRegistrationMethod.cxx.o: ../ImageRegistrationMethod.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/robertgriesmeyer/ImageRegistration/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/ImageRegistrationMethod.dir/ImageRegistrationMethod.cxx.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ImageRegistrationMethod.dir/ImageRegistrationMethod.cxx.o -c /Users/robertgriesmeyer/ImageRegistration/ImageRegistrationMethod.cxx
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/amelie/Documents/CSC621/ImageRegistration/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/ImageRegistrationMethod.dir/ImageRegistrationMethod.cxx.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ImageRegistrationMethod.dir/ImageRegistrationMethod.cxx.o -c /Users/amelie/Documents/CSC621/ImageRegistration/ImageRegistrationMethod.cxx
 
 CMakeFiles/ImageRegistrationMethod.dir/ImageRegistrationMethod.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ImageRegistrationMethod.dir/ImageRegistrationMethod.cxx.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/robertgriesmeyer/ImageRegistration/ImageRegistrationMethod.cxx > CMakeFiles/ImageRegistrationMethod.dir/ImageRegistrationMethod.cxx.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/amelie/Documents/CSC621/ImageRegistration/ImageRegistrationMethod.cxx > CMakeFiles/ImageRegistrationMethod.dir/ImageRegistrationMethod.cxx.i
 
 CMakeFiles/ImageRegistrationMethod.dir/ImageRegistrationMethod.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ImageRegistrationMethod.dir/ImageRegistrationMethod.cxx.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/robertgriesmeyer/ImageRegistration/ImageRegistrationMethod.cxx -o CMakeFiles/ImageRegistrationMethod.dir/ImageRegistrationMethod.cxx.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/amelie/Documents/CSC621/ImageRegistration/ImageRegistrationMethod.cxx -o CMakeFiles/ImageRegistrationMethod.dir/ImageRegistrationMethod.cxx.s
 
 # Object files for target ImageRegistrationMethod
 ImageRegistrationMethod_OBJECTS = \
@@ -202,7 +202,7 @@ ImageRegistrationMethod.app/Contents/MacOS/ImageRegistrationMethod: /usr/local/l
 ImageRegistrationMethod.app/Contents/MacOS/ImageRegistrationMethod: /usr/local/lib/libitknetlib-4.13.a
 ImageRegistrationMethod.app/Contents/MacOS/ImageRegistrationMethod: /usr/local/lib/libitkvcl-4.13.a
 ImageRegistrationMethod.app/Contents/MacOS/ImageRegistrationMethod: CMakeFiles/ImageRegistrationMethod.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/robertgriesmeyer/ImageRegistration/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ImageRegistrationMethod.app/Contents/MacOS/ImageRegistrationMethod"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/amelie/Documents/CSC621/ImageRegistration/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ImageRegistrationMethod.app/Contents/MacOS/ImageRegistrationMethod"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ImageRegistrationMethod.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -215,6 +215,6 @@ CMakeFiles/ImageRegistrationMethod.dir/clean:
 .PHONY : CMakeFiles/ImageRegistrationMethod.dir/clean
 
 CMakeFiles/ImageRegistrationMethod.dir/depend:
-	cd /Users/robertgriesmeyer/ImageRegistration/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/robertgriesmeyer/ImageRegistration /Users/robertgriesmeyer/ImageRegistration /Users/robertgriesmeyer/ImageRegistration/build /Users/robertgriesmeyer/ImageRegistration/build /Users/robertgriesmeyer/ImageRegistration/build/CMakeFiles/ImageRegistrationMethod.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/amelie/Documents/CSC621/ImageRegistration/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/amelie/Documents/CSC621/ImageRegistration /Users/amelie/Documents/CSC621/ImageRegistration /Users/amelie/Documents/CSC621/ImageRegistration/build /Users/amelie/Documents/CSC621/ImageRegistration/build /Users/amelie/Documents/CSC621/ImageRegistration/build/CMakeFiles/ImageRegistrationMethod.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/ImageRegistrationMethod.dir/depend
 
