@@ -2,7 +2,6 @@
 #include "itkTranslationTransform.h"
 #include "itkMeanSquaresImageToImageMetricv4.h"
 #include "itkRegularStepGradientDescentOptimizerv4.h"
-// Software Guide : EndCodeSnippet
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
 #include "itkResampleImageFilter.h"
@@ -39,55 +38,36 @@ public:
 };
 int main( int argc, char *argv[] )
 {
-  if( argc < 4 )
-    {
-    std::cerr << "Missing Parameters " << std::endl;
-    std::cerr << "Usage: " << argv[0];
-    std::cerr << " fixedImageFile  movingImageFile ";
-    std::cerr << "outputImagefile [differenceImageAfter]";
-    std::cerr << "[differenceImageBefore] [useEstimator]" << std::endl;
-    return EXIT_FAILURE;
-    }
 
   const unsigned int Dimension = 2;
   using PixelType = float;
 
-  using FixedImageType = itk::Image< PixelType, Dimension >;
-  using MovingImageType = itk::Image< PixelType, Dimension >;
+  using FixedImageType = itk::Image<PixelType, Dimension>;
+  using MovingImageType = itk::Image<PixelType, Dimension>;
 
-  using TransformType = itk::TranslationTransform< double, Dimension >;
+  using TransformType = itk::TranslationTransform<double, Dimension>;
 
   using OptimizerType = itk::RegularStepGradientDescentOptimizerv4<double>;
 
-  using MetricType = itk::MeanSquaresImageToImageMetricv4<
-                                          FixedImageType,
-                                          MovingImageType >;
+  using MetricType = itk::MeanSquaresImageToImageMetricv4<FixedImageType, MovingImageType>;
 
-  using RegistrationType = itk::ImageRegistrationMethodv4<
-                                    FixedImageType,
-                                    MovingImageType,
-                                    TransformType   >;
+  using RegistrationType = itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType, TransformType>;
 
-  MetricType::Pointer         metric        = MetricType::New();
-  OptimizerType::Pointer      optimizer     = OptimizerType::New();
-  RegistrationType::Pointer   registration  = RegistrationType::New();
+  MetricType::Pointer metric = MetricType::New();
+  OptimizerType::Pointer optimizer = OptimizerType::New();
+  RegistrationType::Pointer registration = RegistrationType::New();
 
-  registration->SetMetric(        metric        );
-  registration->SetOptimizer(     optimizer     );
+  registration->SetMetric(metric);
+  registration->SetOptimizer(optimizer);
 
-  using FixedLinearInterpolatorType = itk::LinearInterpolateImageFunction<
-                                        FixedImageType,
-                                        double >;
-  using MovingLinearInterpolatorType = itk::LinearInterpolateImageFunction<
-                                        MovingImageType,
-                                        double >;
+  using FixedLinearInterpolatorType = itk::LinearInterpolateImageFunction<FixedImageType,double>;
+  using MovingLinearInterpolatorType = itk::LinearInterpolateImageFunction<MovingImageType, double>;
 
-  FixedLinearInterpolatorType::Pointer fixedInterpolator =
-    FixedLinearInterpolatorType::New();
-  MovingLinearInterpolatorType::Pointer movingInterpolator =
-    MovingLinearInterpolatorType::New();
-  metric->SetFixedInterpolator(  fixedInterpolator  );
-  metric->SetMovingInterpolator(  movingInterpolator  );
+  FixedLinearInterpolatorType::Pointer fixedInterpolator = FixedLinearInterpolatorType::New();
+  MovingLinearInterpolatorType::Pointer movingInterpolator = MovingLinearInterpolatorType::New();
+
+  metric->SetFixedInterpolator(fixedInterpolator);
+  metric->SetMovingInterpolator(movingInterpolator);
   // Software Guide : EndCodeSnippet
   using FixedImageReaderType = itk::ImageFileReader< FixedImageType  >;
   using MovingImageReaderType = itk::ImageFileReader< MovingImageType >;
@@ -131,8 +111,7 @@ int main( int argc, char *argv[] )
     }
 
   optimizer->SetNumberOfIterations( 200 );
-  // Software Guide : EndCodeSnippet
-  // Connect an observer
+
   CommandIterationUpdate::Pointer observer = CommandIterationUpdate::New();
   optimizer->AddObserver( itk::IterationEvent(), observer );
 
@@ -170,9 +149,7 @@ int main( int argc, char *argv[] )
   const unsigned int numberOfIterations = optimizer->GetCurrentIteration();
  
   const double bestValue = optimizer->GetValue();
-  // Software Guide : EndCodeSnippet
-  // Print out results
-  //
+
   std::cout << "Result = " << std::endl;
   std::cout << " Translation X = " << TranslationAlongX  << std::endl;
   std::cout << " Translation Y = " << TranslationAlongY  << std::endl;
@@ -214,7 +191,7 @@ int main( int argc, char *argv[] )
 
   WriterType::Pointer      writer =  WriterType::New();
   CastFilterType::Pointer  caster =  CastFilterType::New();
-  // Software Guide : EndCodeSnippet
+
   writer->SetFileName( argv[3] );
 
   caster->SetInput( resampler->GetOutput() );
