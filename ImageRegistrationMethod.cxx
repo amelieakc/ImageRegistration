@@ -68,77 +68,49 @@ int main( int argc, char *argv[] )
 
   metric->SetFixedInterpolator(fixedInterpolator);
   metric->SetMovingInterpolator(movingInterpolator);
-  // Software Guide : EndCodeSnippet
-  using FixedImageReaderType = itk::ImageFileReader< FixedImageType  >;
-  using MovingImageReaderType = itk::ImageFileReader< MovingImageType >;
-  FixedImageReaderType::Pointer   fixedImageReader     = FixedImageReaderType::New();
-  MovingImageReaderType::Pointer  movingImageReader    = MovingImageReaderType::New();
-  fixedImageReader->SetFileName(  argv[1] );
-  movingImageReader->SetFileName( argv[2] );
 
-  registration->SetFixedImage(    fixedImageReader->GetOutput()    );
-  registration->SetMovingImage(   movingImageReader->GetOutput()   );
+  using FixedImageReaderType = itk::ImageFileReader<FixedImageType>;
+  using MovingImageReaderType = itk::ImageFileReader<MovingImageType>;
+  FixedImageReaderType::Pointer fixedImageReader = FixedImageReaderType::New();
+  MovingImageReaderType::Pointer movingImageReader = MovingImageReaderType::New();
+  fixedImageReader->SetFileName(argv[1]);
+  movingImageReader->SetFileName(argv[2]);
+
+  registration->SetFixedImage(fixedImageReader->GetOutput());
+  registration->SetMovingImage(movingImageReader->GetOutput());
 
   TransformType::Pointer movingInitialTransform = TransformType::New();
-  TransformType::ParametersType initialParameters(
-    movingInitialTransform->GetNumberOfParameters() );
-  initialParameters[0] = 0.0;  // Initial offset in mm along X
-  initialParameters[1] = 0.0;  // Initial offset in mm along Y
-  movingInitialTransform->SetParameters( initialParameters );
-  registration->SetMovingInitialTransform( movingInitialTransform );
+  TransformType::ParametersType initialParameters(movingInitialTransform->GetNumberOfParameters());
+  initialParameters[0] = 0.0;
+  initialParameters[1] = 0.0; 
+  movingInitialTransform->SetParameters(initialParameters);
+  registration->SetMovingInitialTransform(movingInitialTransform);
 
-  TransformType::Pointer   identityTransform = TransformType::New();
+  TransformType::Pointer identityTransform = TransformType::New();
   identityTransform->SetIdentity();
-  registration->SetFixedInitialTransform( identityTransform );
+  registration->SetFixedInitialTransform(identityTransform);
 
-  optimizer->SetLearningRate( 4 );
-  optimizer->SetMinimumStepLength( 0.001 );
-  optimizer->SetRelaxationFactor( 0.5 );
-  // Software Guide : EndCodeSnippet
-  bool useEstimator = false;
-  if( argc > 6 )
-    {
-    useEstimator = atoi(argv[6]) != 0;
-    }
-  if( useEstimator )
-    {
-    using ScalesEstimatorType = itk::RegistrationParameterScalesFromPhysicalShift<MetricType>;
-    ScalesEstimatorType::Pointer scalesEstimator = ScalesEstimatorType::New();
-    scalesEstimator->SetMetric( metric );
-    scalesEstimator->SetTransformForward( true );
-    optimizer->SetScalesEstimator( scalesEstimator );
-    optimizer->SetDoEstimateLearningRateOnce( true );
-    }
+  optimizer->SetLearningRate(4);
+  optimizer->SetMinimumStepLength(0.001);
+  optimizer->SetRelaxationFactor(0.5);
 
-  optimizer->SetNumberOfIterations( 200 );
+  optimizer->SetNumberOfIterations(200);
 
   CommandIterationUpdate::Pointer observer = CommandIterationUpdate::New();
   optimizer->AddObserver( itk::IterationEvent(), observer );
 
   const unsigned int numberOfLevels = 1;
   RegistrationType::ShrinkFactorsArrayType shrinkFactorsPerLevel;
-  shrinkFactorsPerLevel.SetSize( 1 );
+  shrinkFactorsPerLevel.SetSize(1);
   shrinkFactorsPerLevel[0] = 1;
   RegistrationType::SmoothingSigmasArrayType smoothingSigmasPerLevel;
-  smoothingSigmasPerLevel.SetSize( 1 );
+  smoothingSigmasPerLevel.SetSize(1);
   smoothingSigmasPerLevel[0] = 0;
-  registration->SetNumberOfLevels ( numberOfLevels );
-  registration->SetSmoothingSigmasPerLevel( smoothingSigmasPerLevel );
-  registration->SetShrinkFactorsPerLevel( shrinkFactorsPerLevel );
+  registration->SetNumberOfLevels (numberOfLevels);
+  registration->SetSmoothingSigmasPerLevel(smoothingSigmasPerLevel);
+  registration->SetShrinkFactorsPerLevel(shrinkFactorsPerLevel);
 
-  try
-    {
-    registration->Update();
-    std::cout << "Optimizer stop condition: "
-    << registration->GetOptimizer()->GetStopConditionDescription()
-    << std::endl;
-    }
-  catch( itk::ExceptionObject & err )
-    {
-    std::cerr << "ExceptionObject caught !" << std::endl;
-    std::cerr << err << std::endl;
-    return EXIT_FAILURE;
-    }
+   registration->Update();
 
   TransformType::ConstPointer transform = registration->GetTransform();
 
@@ -149,74 +121,54 @@ int main( int argc, char *argv[] )
   const unsigned int numberOfIterations = optimizer->GetCurrentIteration();
  
   const double bestValue = optimizer->GetValue();
+ 
+  using CompositeTransformType = itk::CompositeTransform<double, Dimension>;
+  CompositeTransformType::Pointer outputCompositeTransform = CompositeTransformType::New();
+  outputCompositeTransform->AddTransform(movingInitialTransform);
+  outputCompositeTransform->AddTransform(registration->GetModifiableTransform());
 
-  std::cout << "Result = " << std::endl;
-  std::cout << " Translation X = " << TranslationAlongX  << std::endl;
-  std::cout << " Translation Y = " << TranslationAlongY  << std::endl;
-  std::cout << " Iterations    = " << numberOfIterations << std::endl;
-  std::cout << " Metric value  = " << bestValue          << std::endl;
-  std::cout << "New Image Saved As: 'Output'" << std::endl;
-  
-  using CompositeTransformType = itk::CompositeTransform<
-                                 double,
-                                 Dimension >;
-  CompositeTransformType::Pointer outputCompositeTransform =
-    CompositeTransformType::New();
-  outputCompositeTransform->AddTransform( movingInitialTransform );
-  outputCompositeTransform->AddTransform(
-    registration->GetModifiableTransform() );
-
-  using ResampleFilterType = itk::ResampleImageFilter<
-                            MovingImageType,
-                            FixedImageType >;
+  using ResampleFilterType = itk::ResampleImageFilter<MovingImageType, FixedImageType>;
 
   ResampleFilterType::Pointer resampler = ResampleFilterType::New();
-  resampler->SetInput( movingImageReader->GetOutput() );
+  resampler->SetInput(movingImageReader->GetOutput());
 
-  resampler->SetTransform( outputCompositeTransform );
+  resampler->SetTransform(outputCompositeTransform);
 
   FixedImageType::Pointer fixedImage = fixedImageReader->GetOutput();
-  resampler->SetSize( fixedImage->GetLargestPossibleRegion().GetSize() );
-  resampler->SetOutputOrigin(  fixedImage->GetOrigin() );
-  resampler->SetOutputSpacing( fixedImage->GetSpacing() );
-  resampler->SetOutputDirection( fixedImage->GetDirection() );
-  resampler->SetDefaultPixelValue( 100 );
+  resampler->SetSize(fixedImage->GetLargestPossibleRegion().GetSize());
+  resampler->SetOutputOrigin(fixedImage->GetOrigin());
+  resampler->SetOutputSpacing(fixedImage->GetSpacing());
+  resampler->SetOutputDirection(fixedImage->GetDirection());
+  resampler->SetDefaultPixelValue(100);
 
   using OutputPixelType = unsigned char;
-  using OutputImageType = itk::Image< OutputPixelType, Dimension >;
-  using CastFilterType = itk::CastImageFilter<
-                        FixedImageType,
-                        OutputImageType >;
-  using WriterType = itk::ImageFileWriter< OutputImageType >;
+  using OutputImageType = itk::Image<OutputPixelType, Dimension>;
+  using CastFilterType = itk::CastImageFilter<FixedImageType, OutputImageType>;
+  using WriterType = itk::ImageFileWriter<OutputImageType>;
 
-  WriterType::Pointer      writer =  WriterType::New();
-  CastFilterType::Pointer  caster =  CastFilterType::New();
+  WriterType::Pointer writer = WriterType::New();
+  CastFilterType::Pointer caster = CastFilterType::New();
 
-  writer->SetFileName( argv[3] );
+  writer->SetFileName(argv[3]);
 
-  caster->SetInput( resampler->GetOutput() );
-  writer->SetInput( caster->GetOutput()   );
+  caster->SetInput(resampler->GetOutput());
+  writer->SetInput(caster->GetOutput());
   writer->Update();
 
-  using DifferenceFilterType = itk::SubtractImageFilter<
-                                  FixedImageType,
-                                  FixedImageType,
-                                  FixedImageType >;
+  using DifferenceFilterType = itk::SubtractImageFilter< FixedImageType, FixedImageType, FixedImageType >;
   DifferenceFilterType::Pointer difference = DifferenceFilterType::New();
-  difference->SetInput1( fixedImageReader->GetOutput() );
-  difference->SetInput2( resampler->GetOutput() );
+  difference->SetInput1(fixedImageReader->GetOutput());
+  difference->SetInput2(resampler->GetOutput());
 
-  using RescalerType = itk::RescaleIntensityImageFilter<
-                                  FixedImageType,
-                                  OutputImageType >;
+  using RescalerType = itk::RescaleIntensityImageFilter<FixedImageType, OutputImageType>;
   RescalerType::Pointer intensityRescaler = RescalerType::New();
-  intensityRescaler->SetInput( difference->GetOutput() );
-  intensityRescaler->SetOutputMinimum(   0 );
-  intensityRescaler->SetOutputMaximum( 255 );
-  resampler->SetDefaultPixelValue( 1 );
+  intensityRescaler->SetInput(difference->GetOutput());
+  intensityRescaler->SetOutputMinimum(0);
+  intensityRescaler->SetOutputMaximum(255);
+  resampler->SetDefaultPixelValue(1);
 
   WriterType::Pointer writer2 = WriterType::New();
-  writer2->SetInput( intensityRescaler->GetOutput() );
+  writer2->SetInput(intensityRescaler->GetOutput());
 
-  return EXIT_SUCCESS;
+  return 0;
 }
