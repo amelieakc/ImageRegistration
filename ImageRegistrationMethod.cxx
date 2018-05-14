@@ -64,14 +64,14 @@ int main( int argc, char *argv[] )
   identityTransform->SetIdentity();
   registration->SetFixedInitialTransform(identityTransform);
 
-  optimizer->SetLearningRate(4);
-  optimizer->SetMinimumStepLength(0.001);
-  optimizer->SetRelaxationFactor(0.5);
+  optimizer->SetLearningRate(3);
+  optimizer->SetMinimumStepLength(0.01);
+  optimizer->SetRelaxationFactor(0.3);
 
-  optimizer->SetNumberOfIterations(200);
+  optimizer->SetNumberOfIterations(300);
 
   CommandIterationUpdate::Pointer observer = CommandIterationUpdate::New();
-  optimizer->AddObserver( itk::IterationEvent(), observer );
+  optimizer->AddObserver(itk::IterationEvent(), observer);
 
   const unsigned int numberOfLevels = 1;
   RegistrationType::ShrinkFactorsArrayType shrinkFactorsPerLevel;
