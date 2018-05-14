@@ -16,11 +16,14 @@ int main( int argc, char *argv[] )
   const unsigned int Dimension = 2;
   using PixelType = float;
 
+  // create fixed and moving image types
   using FixedImageType = itk::Image<PixelType, Dimension>;
   using MovingImageType = itk::Image<PixelType, Dimension>;
 
+  // transformer 
   using TransformType = itk::TranslationTransform<double, Dimension>;
 
+  // optimizer using gradient descent 
   using OptimizerType = itk::RegularStepGradientDescentOptimizerv4<double>;
 
   using MetricType = itk::MeanSquaresImageToImageMetricv4<FixedImageType, MovingImageType>;
@@ -31,6 +34,7 @@ int main( int argc, char *argv[] )
   OptimizerType::Pointer optimizer = OptimizerType::New();
   RegistrationType::Pointer registration = RegistrationType::New();
 
+  // attach metric and optimizer to the registration object
   registration->SetMetric(metric);
   registration->SetOptimizer(optimizer);
 
@@ -40,9 +44,11 @@ int main( int argc, char *argv[] )
   FixedLinearInterpolatorType::Pointer fixedInterpolator = FixedLinearInterpolatorType::New();
   MovingLinearInterpolatorType::Pointer movingInterpolator = MovingLinearInterpolatorType::New();
 
+  // Interpolator allows use to compare similarity using metric
   metric->SetFixedInterpolator(fixedInterpolator);
   metric->SetMovingInterpolator(movingInterpolator);
 
+  // read in fixed and moving images
   using FixedImageReaderType = itk::ImageFileReader<FixedImageType>;
   using MovingImageReaderType = itk::ImageFileReader<MovingImageType>;
   FixedImageReaderType::Pointer fixedImageReader = FixedImageReaderType::New();
@@ -50,11 +56,14 @@ int main( int argc, char *argv[] )
   fixedImageReader->SetFileName(argv[1]);
   movingImageReader->SetFileName(argv[2]);
 
+  // set fixed and moving image to registration object
   registration->SetFixedImage(fixedImageReader->GetOutput());
   registration->SetMovingImage(movingImageReader->GetOutput());
 
   TransformType::Pointer movingInitialTransform = TransformType::New();
   TransformType::ParametersType initialParameters(movingInitialTransform->GetNumberOfParameters());
+
+  // Set initialParameters to 0.0
   initialParameters[0] = 0.0;
   initialParameters[1] = 0.0; 
   movingInitialTransform->SetParameters(initialParameters);
@@ -64,12 +73,12 @@ int main( int argc, char *argv[] )
   identityTransform->SetIdentity();
   registration->SetFixedInitialTransform(identityTransform);
 
+  // set learning rate for gradient descent
+  optimizer->SetNumberOfIterations(300);
   optimizer->SetLearningRate(3);
   optimizer->SetMinimumStepLength(0.01);
   optimizer->SetRelaxationFactor(0.3);
-
-  optimizer->SetNumberOfIterations(300);
-
+ 
   CommandIterationUpdate::Pointer observer = CommandIterationUpdate::New();
   optimizer->AddObserver(itk::IterationEvent(), observer);
 
@@ -77,15 +86,19 @@ int main( int argc, char *argv[] )
   RegistrationType::ShrinkFactorsArrayType shrinkFactorsPerLevel;
   shrinkFactorsPerLevel.SetSize(1);
   shrinkFactorsPerLevel[0] = 1;
+
   RegistrationType::SmoothingSigmasArrayType smoothingSigmasPerLevel;
   smoothingSigmasPerLevel.SetSize(1);
   smoothingSigmasPerLevel[0] = 0;
-  registration->SetNumberOfLevels (numberOfLevels);
+
+  registration->SetNumberOfLevels(numberOfLevels);
   registration->SetSmoothingSigmasPerLevel(smoothingSigmasPerLevel);
   registration->SetShrinkFactorsPerLevel(shrinkFactorsPerLevel);
 
-   registration->Update();
+  // run the update to perform optimization
+  registration->Update();
 
+  // Using the resulting transformer, convert image which will generate the output image
   TransformType::ConstPointer transform = registration->GetTransform();
 
   TransformType::ParametersType finalParameters = transform->GetParameters();
@@ -93,8 +106,6 @@ int main( int argc, char *argv[] )
   const double TranslationAlongY = finalParameters[1];
 
   const unsigned int numberOfIterations = optimizer->GetCurrentIteration();
- 
-  const double bestValue = optimizer->GetValue();
  
   using CompositeTransformType = itk::CompositeTransform<double, Dimension>;
   CompositeTransformType::Pointer outputCompositeTransform = CompositeTransformType::New();
