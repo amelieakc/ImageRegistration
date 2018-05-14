@@ -3,6 +3,7 @@
 
 CMakeFiles/ImageRegistrationMethod.dir/ImageRegistrationMethod.cxx.o
  /Users/amelie/Documents/CSC621/ImageRegistration/ImageRegistrationMethod.cxx
+ /Users/amelie/Documents/CSC621/ImageRegistration/ImageRegistrationMethod.h
  /usr/local/include/ITK-4.13/ITKCommonExport.h
  /usr/local/include/ITK-4.13/ITKIOImageBaseExport.h
  /usr/local/include/ITK-4.13/ITKOptimizersv4Export.h

@@ -27,6 +27,10 @@ itkRescaleIntensityImageFilter.h
 /Users/amelie/Documents/CSC621/ImageRegistration/itkRescaleIntensityImageFilter.h
 itkSubtractImageFilter.h
 /Users/amelie/Documents/CSC621/ImageRegistration/itkSubtractImageFilter.h
+ImageRegistrationMethod.h
+/Users/amelie/Documents/CSC621/ImageRegistration/ImageRegistrationMethod.h
+
+/Users/amelie/Documents/CSC621/ImageRegistration/ImageRegistrationMethod.h
 
 /usr/local/include/ITK-4.13/ITKCommonExport.h
 
